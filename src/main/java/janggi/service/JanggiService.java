@@ -1,6 +1,7 @@
 package janggi.service;
 
 import janggi.domain.board.Board;
+import janggi.domain.board.BoardInitializer;
 import janggi.domain.game.GameManager;
 import janggi.domain.game.Players;
 import janggi.dto.GameSessionDto;
@@ -47,7 +48,7 @@ public class JanggiService {
     private GameManager newGame(Connection connection, String choName, String hanName)
             throws SQLException {
         Players players = Players.from(choName, hanName);
-        Board board = Board.initialize();
+        Board board = BoardInitializer.initialize();
         GameManager newGameManager = GameManager.newGame(players, board);
         return gameRepository.save(connection, newGameManager);
     }
