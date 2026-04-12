@@ -17,8 +17,10 @@ public class Board implements BoardInfo {
         this.piecePosition = new HashMap<>(piecePosition);
     }
 
-    public static Board initialize() {
-        Map<Position, Piece> initialBoard = new HashMap<>(initializeEach());
+    public static Board initialize(SangcharimType choType, SangcharimType hanType) {
+        Map<Position, Piece> initialBoard = new HashMap<>();
+        initialBoard.putAll(InitialBoardInfo.CHO.generateInitialPiecePositions(choType));
+        initialBoard.putAll(InitialBoardInfo.HAN.generateInitialPiecePositions(hanType));
         return new Board(initialBoard);
     }
 

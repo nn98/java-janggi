@@ -34,15 +34,14 @@ public enum InitialBoardInfo {
         this.soldierRow = soldierRow;
     }
 
-    public Map<Position, Piece> generateInitialPiecePositions() {
+    public Map<Position, Piece> generateInitialPiecePositions(SangcharimType sangcharimType) {
         Map<Position, Piece> initialBoard = new HashMap<>();
         putPieces(initialBoard, soldierRow, SOLDIER_COLUMNS, PieceType.SOLDIER);
         putPieces(initialBoard, cannonRow, CANNON_COLUMNS, PieceType.CANNON);
         putPieces(initialBoard, bottomRow, CHARIOT_COLUMNS, PieceType.CHARIOT);
-        putPieces(initialBoard, bottomRow, ELEPHANT_COLUMNS, PieceType.ELEPHANT);
-        putPieces(initialBoard, bottomRow, HORSE_COLUMNS, PieceType.HORSE);
         putPieces(initialBoard, bottomRow, GUARD_COLUMNS, PieceType.GUARD);
         putPieces(initialBoard, palaceRow, PALACE_COLUMNS, PieceType.PALACE);
+        sangcharimType.putDynamicPieces(initialBoard, bottomRow, side);
         return Map.copyOf(initialBoard);
     }
 
