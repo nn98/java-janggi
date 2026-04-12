@@ -38,12 +38,4 @@ public record Piece(Side side, PieceType type, String pieceNumber) {
     public boolean isPalace() {
         return type == PieceType.PALACE;
     }
-
-    public boolean isBelongTo(Side side) {
-        return this.side == side;
-    }
-
-    public int getScore() {
-        return type.getScore();
-    }
 }

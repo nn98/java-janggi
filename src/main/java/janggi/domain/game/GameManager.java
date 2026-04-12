@@ -4,6 +4,7 @@ import janggi.domain.board.Board;
 import janggi.domain.board.Destinations;
 import janggi.domain.board.Position;
 import janggi.domain.piece.Piece;
+import janggi.domain.piece.PieceScoreCalculator;
 import java.util.Map;
 
 public class GameManager {
@@ -59,7 +60,7 @@ public class GameManager {
     }
 
     public double currentPlayerScore() {
-        return board.calculateScore(currentPlayer());
+        return PieceScoreCalculator.calculateCurrentPlayerScore(this);
     }
 
     public Map<Side, String> getPlayersInfo() {

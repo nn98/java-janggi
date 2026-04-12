@@ -1,25 +1,38 @@
 package janggi.domain.piece;
 
+import janggi.domain.game.GameManager;
 import janggi.domain.game.Side;
-import java.util.Collection;
 
 public class PieceScoreCalculator {
 
-    private static final double CHO_ADVANTAGE = 1.5;
-
-    public static double calculateScore(Side side, Collection<Piece> pieces) {
-        double totalScore = 0;
-        if (side.hasAdvantage()) {
-            totalScore += CHO_ADVANTAGE;
-        }
-        totalScore += calculateOwnPieceScore(side, pieces);
-        return totalScore;
+    public static double calculateCurrentPlayerScore(GameManager gameManager) {
+        Side currentSide = gameManager.currentPlayer().side();
+        double totalScore = extractAdvantageScore(currentSide);
+        return totalScore + sumRawPieceScores(gameManager, currentSide);
     }
 
-    public static double calculateOwnPieceScore(Side side, Collection<Piece> pieces) {
-        return pieces.stream()
-                .filter(piece -> piece.isBelongTo(side))
-                .mapToInt(Piece::getScore)
+    private static double extractAdvantageScore(Side currentSide) {
+        if (currentSide.hasAdvantage()) {
+            return 1.5;
+        }
+        return 0.0;
+    }
+
+    private static double sumRawPieceScores(GameManager gameManager, Side currentSide) {
+        return gameManager.getBoard().piecePosition().values().stream()
+                .filter(piece -> piece.side() == currentSide)
+                .mapToDouble(PieceScoreCalculator::getScoreByType)
                 .sum();
+    }
+
+    private static double getScoreByType(Piece piece) {
+        return switch (piece.type()) {
+            case CHARIOT -> 13.0;
+            case CANNON -> 7.0;
+            case HORSE -> 5.0;
+            case ELEPHANT -> 3.0;
+            case GUARD, SOLDIER -> 2.0;
+            case PALACE -> 0.0;
+        };
     }
 }

@@ -1,8 +1,6 @@
 package janggi.domain.board;
 
-import janggi.domain.game.Player;
 import janggi.domain.piece.Piece;
-import janggi.domain.piece.PieceScoreCalculator;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -83,10 +81,6 @@ public class Board implements BoardInfo {
         }
         Piece movingPiece = piecePosition.remove(selected);
         piecePosition.put(target, movingPiece);
-    }
-
-    public double calculateScore(Player currentPlayer) {
-        return PieceScoreCalculator.calculateScore(currentPlayer.side(), piecePosition.values());
     }
 
     public Map<Position, Piece> piecePosition() {
