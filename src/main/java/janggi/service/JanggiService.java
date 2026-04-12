@@ -2,6 +2,7 @@ package janggi.service;
 
 import janggi.domain.board.Board;
 import janggi.domain.board.BoardInitializer;
+import janggi.domain.board.SangcharimType;
 import janggi.domain.game.GameManager;
 import janggi.domain.game.Players;
 import janggi.dto.GameSessionDto;
@@ -26,11 +27,12 @@ public class JanggiService {
         return gameRepository.findByGameId(connection, gameId);
     }
 
-    public GameManager createNewSession(Connection connection, String choName, String hanName)
+    public GameManager createNewSession(Connection connection, String choName, String hanName, SangcharimType choType,
+                                        SangcharimType hanType)
             throws SQLException {
         connection.setAutoCommit(false);
         try {
-            return createAndCommitNewGame(connection, choName, hanName);
+            return createAndCommitNewGame(connection, choName, hanName, choType, hanType);
         } catch (SQLException exception) {
             return rollbackAndThrow(connection, exception);
         } finally {
@@ -38,17 +40,19 @@ public class JanggiService {
         }
     }
 
-    private GameManager createAndCommitNewGame(Connection connection, String choName, String hanName)
+    private GameManager createAndCommitNewGame(Connection connection, String choName, String hanName,
+                                               SangcharimType choType, SangcharimType hanType)
             throws SQLException {
-        GameManager gameManager = newGame(connection, choName, hanName);
+        GameManager gameManager = newGame(connection, choName, hanName, choType, hanType);
         connection.commit();
         return gameManager;
     }
 
-    private GameManager newGame(Connection connection, String choName, String hanName)
+    private GameManager newGame(Connection connection, String choName, String hanName, SangcharimType choType,
+                                SangcharimType hanType)
             throws SQLException {
         Players players = Players.from(choName, hanName);
-        Board board = BoardInitializer.initialize();
+        Board board = BoardInitializer.initialize(choType, hanType);
         GameManager newGameManager = GameManager.newGame(players, board);
         return gameRepository.save(connection, newGameManager);
     }

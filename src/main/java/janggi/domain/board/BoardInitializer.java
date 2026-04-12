@@ -9,25 +9,24 @@ import java.util.Map;
 
 public class BoardInitializer {
 
-    public static Board initialize() {
+    public static Board initialize(SangcharimType choType, SangcharimType hanType) {
         Map<Position, Piece> pieces = new HashMap<>();
-        setupSide(pieces, InitialBoardInfo.CHO);
-        setupSide(pieces, InitialBoardInfo.HAN);
+        setupSide(pieces, InitialBoardInfo.CHO, choType);
+        setupSide(pieces, InitialBoardInfo.HAN, hanType);
         return new Board(pieces);
     }
 
-    private static void setupSide(Map<Position, Piece> pieces, InitialBoardInfo info) {
+    private static void setupSide(Map<Position, Piece> pieces, InitialBoardInfo info, SangcharimType type) {
         Side side = info.getSide();
         putFixedPieces(pieces, info, side);
-        putDynamicPieces(pieces, info, side);
+        putDynamicPieces(pieces, info, side, type);
     }
 
-    private static void putFixedPieces(Map<Position, Piece> pieces, InitialBoardInfo info, Side side) {
-        put(pieces, info.getSoldierRow(), List.of(0, 2, 4, 6, 8), PieceType.SOLDIER, side);
-        put(pieces, info.getCannonRow(), List.of(1, 7), PieceType.CANNON, side);
-        put(pieces, info.getPalaceRow(), List.of(4), PieceType.PALACE, side);
-        put(pieces, info.getBottomRow(), List.of(0, 8), PieceType.CHARIOT, side);
-        put(pieces, info.getBottomRow(), List.of(3, 5), PieceType.GUARD, side);
+    private static void putDynamicPieces(Map<Position, Piece> pieces, InitialBoardInfo info, Side side,
+                                         SangcharimType type) {
+        int row = info.getBottomRow();
+        put(pieces, row, type.getHorseColumns(), PieceType.HORSE, side);
+        put(pieces, row, type.getElephantColumns(), PieceType.ELEPHANT, side);
     }
 
     private static void putDynamicPieces(Map<Position, Piece> pieces, InitialBoardInfo info, Side side) {
