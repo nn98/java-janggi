@@ -13,7 +13,7 @@ public class PieceScoreCalculator {
 
     private static double extractAdvantageScore(Side currentSide) {
         if (currentSide.hasAdvantage()) {
-            return 1.5;
+            return 2.5;
         }
         return 0.0;
     }
@@ -31,7 +31,7 @@ public class PieceScoreCalculator {
             case CANNON -> 7.0;
             case HORSE -> 5.0;
             case ELEPHANT -> 3.0;
-            case GUARD, SOLDIER -> 2.0;
+            case GUARD, SOLDIER -> 3.0;
             case PALACE -> 0.0;
         };
     }
