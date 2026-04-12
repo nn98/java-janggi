@@ -3,14 +3,16 @@ package janggi.domain.game;
 import janggi.domain.board.Direction;
 
 public enum Side {
-    CHO(Direction.N),
-    HAN(Direction.S),
+    CHO(Direction.N, 1.5),
+    HAN(Direction.S, 0.0),
     ;
 
     private final Direction forwardDirection;
+    private final double advantageScore;
 
-    Side(Direction forwardDirection) {
+    Side(Direction forwardDirection, double advantage) {
         this.forwardDirection = forwardDirection;
+        this.advantageScore = advantage;
     }
 
     public Side opposite() {
@@ -24,7 +26,7 @@ public enum Side {
         return forwardDirection;
     }
 
-    public boolean hasAdvantage() {
-        return this.equals(CHO);
+    public double advantage() {
+        return advantageScore;
     }
 }

@@ -59,7 +59,7 @@ public class GameManager {
     }
 
     public double currentPlayerScore() {
-        return board.calculateScore(currentPlayer());
+        return board.calculateScore(currentPlayer().side());
     }
 
     public Map<Side, String> getPlayersInfo() {
