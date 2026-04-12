@@ -24,7 +24,7 @@ public enum PieceType {
     CANNON(side -> Direction.cardinalDirections(), new CannonMoveStrategy(), 7),
     HORSE(side -> Direction.cardinalDirections(), new HorseMoveStrategy(), 5),
     ELEPHANT(side -> Direction.cardinalDirections(), new ElephantMoveStrategy(), 3),
-    SOLDIER(side -> EnumSet.of(side.forwardDirection(), Direction.E, Direction.W), new StepMoveStrategy(), 2),
+    SOLDIER(side -> EnumSet.of(side.forwardDirection(), Direction.E, Direction.W), new StepMoveStrategy(), 3),
     ;
 
     private final Function<Side, EnumSet<Direction>> directionProvider;

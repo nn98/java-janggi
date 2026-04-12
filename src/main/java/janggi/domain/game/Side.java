@@ -3,7 +3,7 @@ package janggi.domain.game;
 import janggi.domain.board.Direction;
 
 public enum Side {
-    CHO(Direction.N, 1.5),
+    CHO(Direction.N, 3.5),
     HAN(Direction.S, 0.0),
     ;
 
